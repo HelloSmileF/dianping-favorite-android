@@ -192,6 +192,7 @@ fun ExtractScreen(
     }
 }
 
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 private fun ModeCard(
     selected: Boolean, onClick: () -> Unit,
