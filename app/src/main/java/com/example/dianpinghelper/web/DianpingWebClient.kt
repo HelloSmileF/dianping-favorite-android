@@ -1,5 +1,6 @@
 package com.example.dianpinghelper.web
 
+import android.content.Context
 import android.graphics.Bitmap
 import android.net.http.SslError
 import android.view.ViewGroup
