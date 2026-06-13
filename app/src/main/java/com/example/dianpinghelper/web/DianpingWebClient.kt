@@ -59,8 +59,7 @@ class DianpingWebClient(
     /**
      * 创建并配置 WebView
      */
-    fun createWebView(parent: ViewGroup): WebView {
-        val context = parent.context
+    fun createWebView(context: Context): WebView {
 
         // 先销毁旧的 WebView
         webView?.destroy()
