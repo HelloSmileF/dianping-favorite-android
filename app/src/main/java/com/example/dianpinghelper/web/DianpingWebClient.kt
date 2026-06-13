@@ -91,7 +91,7 @@ class DianpingWebClient(
             webViewClient = object : WebViewClient() {
                 override fun onPageStarted(view: WebView?, url: String?, favicon: Bitmap?) {
                     super.onPageStarted(view, url, favicon)
-                    setState(WebViewState.LOADING)
+                    setWebViewState(WebViewState.LOADING)
                     onMessage("加载中: ${url?.take(60)}...")
                 }
 
@@ -103,10 +103,10 @@ class DianpingWebClient(
                     if (shop != null && isLoggedIn) {
                         executeFavorite(shop)
                     } else if (shop != null) {
-                        setState(WebViewState.NEED_LOGIN)
+                        setWebViewState(WebViewState.NEED_LOGIN)
                         onMessage("请先登录大众点评")
                     } else {
-                        setState(WebViewState.READY)
+                        setWebViewState(WebViewState.READY)
                     }
                 }
 
@@ -162,7 +162,7 @@ class DianpingWebClient(
         } else {
             // 先确保在大众点评首页
             wv.loadUrl("https://m.dianping.com")
-            setState(WebViewState.NEED_LOGIN)
+            setWebViewState(WebViewState.NEED_LOGIN)
             onMessage("请先登录大众点评账号")
         }
     }
@@ -197,7 +197,7 @@ class DianpingWebClient(
      */
     private fun executeFavorite(shop: ShopInfo) {
         val wv = webView ?: return
-        setState(WebViewState.SEARCHING)
+        setWebViewState(WebViewState.SEARCHING)
         onMessage("正在搜索: ${shop.name}")
 
         // 编码店铺名用于 URL
@@ -233,7 +233,7 @@ class DianpingWebClient(
                     2 -> {
                         // 收藏完成
                         step = 3
-                        setState(WebViewState.SUCCESS)
+                        setWebViewState(WebViewState.SUCCESS)
                         onMessage("✅ 已收藏: ${shop.name}")
                     }
                 }
@@ -338,7 +338,7 @@ class DianpingWebClient(
             android.util.Log.d("DianpingWeb", "JS favorite result: $result")
             if (result?.contains("no_favorite") == true) {
                 onMessage("未找到收藏按钮，请手动操作")
-                setState(WebViewState.ERROR)
+                setWebViewState(WebViewState.ERROR)
             }
         }
     }
@@ -368,7 +368,7 @@ class DianpingWebClient(
         }
     }
 
-    private fun setState(s: WebViewState) {
+    private fun setWebViewState(s: WebViewState) {
         state = s
         onStateChange(s)
     }
